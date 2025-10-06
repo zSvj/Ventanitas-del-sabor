@@ -318,6 +318,96 @@ body {
     background: var(--background-light);
 }
 
+/* Menu Controls */
+.menu-controls {
+    margin-bottom: 3rem;
+    background: var(--white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.search-container {
+    position: relative;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.menu-search {
+    width: 100%;
+    max-width: 500px;
+    padding: 15px 50px 15px 20px;
+    border: 2px solid #ddd;
+    border-radius: 25px;
+    font-size: 1rem;
+    outline: none;
+    transition: var(--transition);
+    background: var(--white);
+}
+
+.menu-search:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    pointer-events: none;
+}
+
+.filter-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    border: 2px solid var(--primary-color);
+    background: var(--white);
+    color: var(--primary-color);
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+}
+
+.filter-btn:hover {
+    background: var(--primary-color);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.filter-btn.active {
+    background: var(--primary-color);
+    color: var(--white);
+    box-shadow: var(--shadow);
+}
+
+.results-info {
+    text-align: center;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* Category filtering */
+.menu-category.hidden {
+    display: none;
+}
+
+.menu-item.hidden {
+    display: none;
+}
+
 .section-title {
     text-align: center;
     font-size: 2.5rem;
@@ -929,6 +1019,25 @@ body {
         gap: 1.5rem;
     }
     
+    .menu-controls {
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .filter-buttons {
+        gap: 0.5rem;
+    }
+    
+    .filter-btn {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+    
+    .menu-search {
+        padding: 12px 45px 12px 15px;
+        font-size: 0.9rem;
+    }
+    
     .menu-item {
         padding: 1.5rem;
         margin-bottom: 1rem;
@@ -1025,6 +1134,28 @@ body {
     .btn {
         padding: 12px 20px;
         font-size: 1rem;
+    }
+    
+    .menu-controls {
+        padding: 1rem;
+    }
+    
+    .filter-buttons {
+        gap: 0.3rem;
+    }
+    
+    .filter-btn {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+    
+    .menu-search {
+        padding: 10px 40px 10px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .results-info {
+        font-size: 0.85rem;
     }
     
     .logo-img {

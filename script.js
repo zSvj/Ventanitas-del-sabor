@@ -395,5 +395,156 @@ document.addEventListener('DOMContentLoaded', function() {
     
     window.addEventListener('scroll', debouncedScrollHandler);
     
+    // Menu filtering and search system
+    initializeMenuFilters();
+    
     console.log('Ventanitas del Sabor - Página cargada exitosamente! 🍕');
 });
+
+// Menu filtering and search functionality
+function initializeMenuFilters() {
+    const searchInput = document.getElementById('menuSearch');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const menuCategories = document.querySelectorAll('.menu-category');
+    const menuItems = document.querySelectorAll('.menu-item');
+    const resultsCount = document.getElementById('resultsCount');
+    
+    let currentFilter = 'all';
+    let currentSearch = '';
+    
+    // Search functionality
+    searchInput.addEventListener('input', function() {
+        currentSearch = this.value.toLowerCase().trim();
+        filterMenu();
+    });
+    
+    // Filter buttons functionality
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            currentFilter = this.getAttribute('data-category');
+            filterMenu();
+        });
+    });
+    
+    function filterMenu() {
+        let visibleItems = 0;
+        let visibleCategories = 0;
+        
+        menuCategories.forEach(category => {
+            const categoryType = category.getAttribute('data-category');
+            const categoryItems = category.querySelectorAll('.menu-item');
+            let categoryHasVisibleItems = false;
+            
+            categoryItems.forEach(item => {
+                const itemContent = item.textContent.toLowerCase();
+                const shouldShow = shouldShowItem(categoryType, itemContent);
+                
+                if (shouldShow) {
+                    item.classList.remove('hidden');
+                    categoryHasVisibleItems = true;
+                    visibleItems++;
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+            
+            // Show/hide category based on visible items
+            if (categoryHasVisibleItems) {
+                category.classList.remove('hidden');
+                visibleCategories++;
+            } else {
+                category.classList.add('hidden');
+            }
+        });
+        
+        updateResultsInfo(visibleItems, visibleCategories);
+    }
+    
+    function shouldShowItem(categoryType, itemContent) {
+        // Check category filter
+        const categoryMatch = currentFilter === 'all' || categoryType === currentFilter;
+        
+        // Check search filter
+        let searchMatch = true;
+        if (currentSearch) {
+            // Exact search for specific terms
+            const exactMatches = [
+                'queso', 'jamón', 'salami', 'pollo', 'champiñones',
+                'hamburguesa', 'brusqueta', 'pasta', 'lasagna', 'maizito',
+                'carbonara', 'alfredo', 'bolognesa', 'bbq', 'mexicana',
+                'hawaina', 'pepperoni', 'vegetales', 'artesanal'
+            ];
+            
+            // Check for exact matches first
+            const hasExactMatch = exactMatches.some(term => 
+                itemContent.includes(term) && currentSearch.includes(term)
+            );
+            
+            // Check for price search
+            const priceMatch = currentSearch.match(/\d+/) && 
+                itemContent.includes(currentSearch.replace(/[^\d]/g, ''));
+            
+            // Check for partial content match
+            const contentMatch = itemContent.includes(currentSearch);
+            
+            searchMatch = hasExactMatch || priceMatch || contentMatch;
+        }
+        
+        return categoryMatch && searchMatch;
+    }
+    
+    function updateResultsInfo(itemCount, categoryCount) {
+        let message = '';
+        
+        if (currentSearch && currentFilter !== 'all') {
+            message = `Mostrando ${itemCount} platos de ${getCategoryName(currentFilter)} que coinciden con "${currentSearch}"`;
+        } else if (currentSearch) {
+            message = `Mostrando ${itemCount} platos que coinciden con "${currentSearch}"`;
+        } else if (currentFilter !== 'all') {
+            message = `Mostrando ${itemCount} platos de ${getCategoryName(currentFilter)}`;
+        } else {
+            message = `Mostrando todos los ${itemCount} platos`;
+        }
+        
+        resultsCount.textContent = message;
+    }
+    
+    function getCategoryName(category) {
+        const names = {
+            'menu-dia': 'Menú del Día',
+            'pastas': 'Pastas',
+            'asados': 'Asados',
+            'pizzas': 'Pizzas',
+            'lasagnas': 'Lasagnas',
+            'maizitos': 'Maizitos'
+        };
+        return names[category] || category;
+    }
+    
+    // Clear search when clicking "Todos"
+    document.querySelector('[data-category="all"]').addEventListener('click', function() {
+        searchInput.value = '';
+        currentSearch = '';
+    });
+    
+    // Add search suggestions
+    const searchSuggestions = [
+        'pizza queso', 'hamburguesa', 'pasta carbonara', 'pizza hawaina',
+        'lasagna', 'maizitos', '13000', '17000', '23000'
+    ];
+    
+    searchInput.addEventListener('focus', function() {
+        if (!this.value) {
+            this.placeholder = 'Ejemplos: pizza queso, hamburguesa, 13000...';
+        }
+    });
+    
+    searchInput.addEventListener('blur', function() {
+        this.placeholder = 'Buscar platos, ingredientes o precios...';
+    });
+}

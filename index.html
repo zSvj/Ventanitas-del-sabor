@@ -55,8 +55,30 @@
         <div class="container">
             <h2 class="section-title">Nuestro Menú</h2>
             
+            <!-- Search and Filter Bar -->
+            <div class="menu-controls">
+                <div class="search-container">
+                    <input type="text" id="menuSearch" placeholder="Buscar platos, ingredientes o precios..." class="menu-search">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-category="all">Todos</button>
+                    <button class="filter-btn" data-category="menu-dia">Menú del Día</button>
+                    <button class="filter-btn" data-category="pastas">Pastas</button>
+                    <button class="filter-btn" data-category="asados">Asados</button>
+                    <button class="filter-btn" data-category="pizzas">Pizzas</button>
+                    <button class="filter-btn" data-category="lasagnas">Lasagnas</button>
+                    <button class="filter-btn" data-category="maizitos">Maizitos</button>
+                </div>
+                
+                <div class="results-info">
+                    <span id="resultsCount">Mostrando todos los platos</span>
+                </div>
+            </div>
+            
             <!-- Menu del Día -->
-            <div class="menu-category">
+            <div class="menu-category" data-category="menu-dia">
                 <h3 class="category-title">Menú del Día</h3>
                 <div class="menu-grid">
                     <div class="menu-item">
@@ -86,7 +108,7 @@
             </div>
 
             <!-- Pastas -->
-            <div class="menu-category">
+            <div class="menu-category" data-category="pastas">
                 <h3 class="category-title">Pastas</h3>
                 <div class="menu-grid">
                     <div class="menu-item">
@@ -112,7 +134,7 @@
             </div>
 
             <!-- Asados -->
-            <div class="menu-category">
+            <div class="menu-category" data-category="asados">
                 <h3 class="category-title">Deliciosos Asados</h3>
                 <div class="menu-grid">
                     <div class="menu-item featured">
@@ -139,7 +161,7 @@
             </div>
 
             <!-- Pizzas -->
-            <div class="menu-category">
+            <div class="menu-category" data-category="pizzas">
                 <h3 class="category-title">Pizzas Artesanales</h3>
                 <div class="menu-grid">
                     <!-- Pizza Queso -->
@@ -455,7 +477,7 @@
             </div>
 
             <!-- Lasagnas -->
-            <div class="menu-category">
+            <div class="menu-category" data-category="lasagnas">
                 <h3 class="category-title">Lasagnas</h3>
                 <div class="menu-grid">
                     <div class="menu-item">
@@ -496,7 +518,7 @@
             </div>
 
             <!-- Maizitos -->
-            <div class="menu-category">
+            <div class="menu-category" data-category="maizitos">
                 <h3 class="category-title">Maizitos</h3>
                 <div class="menu-grid">
                     <div class="menu-item">
